@@ -29,7 +29,7 @@ class TestDeployableObject(DbTestCase):
 
     @property
     def fake_device(self):
-        db_device = fake_device.get_fake_devices_as_dict()[0]
+        db_device = fake_device.get_fake_devices_as_dict()[2]
         return db_device
 
     @property

@@ -51,7 +51,16 @@ class ConductorManagerTest(base.TestCase):
                   "CUSTOM_FPGA_INTEL_REGION_UUID",
                   "CUSTOM_FPGA_FUNCTION_ID_INTEL_UUID",
                   "CUSTOM_PROGRAMMABLE",
-                  "CUSTOM_FPGA_NETWORK"]
+                  "CUSTOM_FPGA_NETWORK",
+                  "CUSTOM_VMLU_CAMBRICON",
+                  "CUSTOM_VMLU_CAMBRICON_MLU270",
+                  "CUSTOM_VMLU_CAMBRICON_VMLU270",
+                  "CUSTOM_VMLU_CAMBRICON_MLU290",
+                  "CUSTOM_VMLU_CAMBRICON_VMLU290",
+                  "CUSTOM_VMLU_FUNCTION_ID_CAMBRICON_00",
+                  "CUSTOM_VMLU_FUNCTION_ID_CAMBRICON_01",
+                  "CUSTOM_VMLU_FUNCTION_ID_CAMBRICON_02",
+                  "CUSTOM_VMLU_FUNCTION_ID_CAMBRICON_03"]
         total = 42
         expected_inv = {
             rc: {

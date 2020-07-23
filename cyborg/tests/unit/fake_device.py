@@ -38,7 +38,17 @@ def get_fake_devices_as_dict():
         "type": "GPU",
         "std_board_info": "{'class': 'Fake class', 'device_id': '0xdcba'}"
         }
-    return [device1, device2]
+    device3 = {
+        "id": 3,
+        "vendor": "0xCACC",
+        "uuid": u"1c6c9039-560d-4a7a-bb8e-94455d1e7827",
+        "hostname": "test-node-3",
+        "vendor_board_info": "fake_vendor_info",
+        "model": "miss model info",
+        "type": "MLU",
+        "std_board_info": "{'class': 'Fake class', 'device_id': '0xcacc'}"
+        }
+    return [device1, device2, device3]
 
 
 def _convert_from_dict_to_obj(device_dict):

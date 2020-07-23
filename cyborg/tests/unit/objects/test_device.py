@@ -23,7 +23,7 @@ class TestDeviceObject(base.DbTestCase):
 
     def setUp(self):
         super(TestDeviceObject, self).setUp()
-        self.fake_device = fake_device.get_db_devices()[0]
+        self.fake_device = fake_device.get_db_devices()[2]
 
     def test_get(self):
         uuid = self.fake_device['uuid']
@@ -136,7 +136,7 @@ class TestDeviceObject(base.DbTestCase):
                 self.assertEqual(self.context, device._context)
 
     def test_device_type(self):
-        for t in ["GPU", "FPGA", "AICHIP"]:
+        for t in ["GPU", "FPGA", "AICHIP", "MLU"]:
             device = objects.Device(self.context, type=t)
             self.assertEqual(self.context, device._context)
         # Invaild type will raise ValueError
