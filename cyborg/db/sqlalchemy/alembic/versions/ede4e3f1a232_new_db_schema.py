@@ -19,7 +19,7 @@ substate = sa.Enum('Initial', name='substate')
 attach_type = sa.Enum('PCI', 'MDEV', name='attach_type')
 cpid_type = sa.Enum('PCI', name='cpid_type')
 control_type = sa.Enum('PCI', name='control_type')
-device_type = sa.Enum('GPU', 'FPGA', name='device_type')
+device_type = sa.Enum('GPU', 'FPGA', 'MLU', name='device_type')
 
 
 def upgrade():
