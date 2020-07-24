@@ -54,6 +54,9 @@ def _get_arqs_as_dict():
             "resources:FPGA": "1",
             "accel:bitstream_id": "b069d97a-010a-4057-b70d-eca2b337fc9c",
             "accel:function_id": "25453786-03e0-4ee7-a640-969eb5a5aa44"}},
+        {"device_profile_group": {
+            "trait:CUSTOM_VMLU_CAMBRICON_MLU270": "required",
+            "resources:VMLU": "1"}},
     ]
     arqs = [  # Corresponds to 1st device profile in fake_device)profile.py
         {"uuid": "a097fefa-da62-4630-8e8b-424c0e3426dc",
@@ -75,6 +78,10 @@ def _get_arqs_as_dict():
         {"uuid": "3a9a07e7-d126-47a5-bf11-dcc04f9e60ff",
          "device_profile_group_id": 4,
          "device_rp_uuid": "fbd485e1-40b1-4a7e-84b9-f6b6959114a4",
+         },
+        {"uuid": "aa140114-4869-45ea-8213-45f530804b01",
+         "device_profile_group_id": 5,
+         "device_rp_uuid": "a1ec17f2-0052-4737-bac4-f074d8a01a9f",
          },
     ]
     new_arqs = []
@@ -197,6 +204,23 @@ def _get_arqs_bind_as_dict():
             "device_profile_group": {
                 "trait:CUSTOM_FPGA_INTEL": "required",
                 "resources:FPGA": "1"}
+        }, {
+            "state": "Deleting",
+            "device_profile_name": "afaas_example_5",
+            "hostname": "myhost1",
+            "instance_uuid": "5922a70f-1e06-4cfd-88dd-a332120d7144",
+            "attach_handle_type": "PCI",
+            # attach_handle info should vary across ARQs but ignored for
+            # testing
+            "attach_handle_info": {
+                "bus": "5",
+                "device": "0",
+                "domain": "0",
+                "function": "0"
+            },
+            "device_profile_group": {
+                "trait:CUSTOM_VMLU_CAMBRICON_MLU270": "required",
+                "resources:VMLU": "1"}
         },
     ]
     arqs = [  # Corresponds to 1st device profile in fake_device)profile.py
@@ -215,6 +239,10 @@ def _get_arqs_bind_as_dict():
         {"uuid": "292b2fa2-0831-484c-aeac-09c794428a5d",
          "device_profile_group_id": 0,
          "device_rp_uuid": "57455a49-bde4-490e-9179-9aa84a3870bc",
+         },
+        {"uuid": "292b2fa2-0831-484c-aeac-09c794428a40",
+         "device_profile_group_id": 0,
+         "device_rp_uuid": "57455a49-bde4-490e-9179-9aa84a3870ac",
          }
     ]
     new_arqs = []

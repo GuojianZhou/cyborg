@@ -36,9 +36,9 @@ class TestExtARQJobMixin(base.DbTestCase):
         self.fake_db_extarqs = fake_extarq.get_fake_db_extarqs()
         self.fake_obj_extarqs = fake_extarq.get_fake_extarq_objs()
         self.fake_obj_fpga_extarqs = fake_extarq.get_fake_fpga_extarq_objs()
-        self.deployable_uuids = ['0acbf8d6-e02a-4394-aae3-57557d209498']
+        self.deployable_uuids = ['0acbf8d6-e02a-4394-aae3-57557d209498','0acbf8d6-e02a-4394-aae3-57557d209666']
         self.classes = ["gpu", "no_program", "bitstream_program",
-                        "function_program", "bad_program"]
+                        "function_program", "bad_program", "mlu"]
         self.class_objects = dict(
             zip(self.classes, self.fake_obj_extarqs))
         self.class_dbs = dict(
@@ -53,13 +53,13 @@ class TestExtARQJobMixin(base.DbTestCase):
             "device_profile_group"][constants.ACCEL_FUNCTION_ID]
 
     def test_get_resources_from_device_profile_group(self):
-        expect = [("GPU", 1)] + [("FPGA", 1)] * 4
+        expect = [("GPU", 1)] + [("FPGA", 1)] * 4 + [("VMLU", 1)]
         actual = [v.get_resources_from_device_profile_group()
                   for v in self.class_objects.values()]
         self.assertEqual(expect, actual)
 
     def test_get_suitable_ext_arq(self):
-        expect_type = [objects.ExtARQ] + [objects.FPGAExtARQ] * 4
+        expect_type = [objects.ExtARQ] + [objects.FPGAExtARQ] * 4 + [objects.ExtARQ]
         uuid = uuidutils.generate_uuid()
         groups = [v['device_profile_group']
                   for v in self.fake_db_extarqs]
@@ -170,7 +170,7 @@ class TestExtARQJobMixin(base.DbTestCase):
         # Test FPGA with bitstream program need async bind
         obj_extarq = self.fpga_class_objects["bitstream_program"]
         obj_extarq.arq.state = constants.ARQ_UNBOUND
-        dep_uuid = self.deployable_uuids[0]
+        dep_uuid = self.deployable_uuids[1]
         fake_dep = fake_deployable.fake_deployable_obj(self.context,
                                                        uuid=dep_uuid)
         need_bind = getattr(obj_extarq.bind, "is_job", False)
@@ -180,6 +180,21 @@ class TestExtARQJobMixin(base.DbTestCase):
             mock_spawn.assert_called_once_with(
                 mock_aysnc_bind, self.context, fake_dep)
             mock_bind.assert_not_called()
+
+    @mock.patch('cyborg.objects.FPGAExtARQ.bind')
+    def test_mlu_arq_start_bind_job(self, mock_aysnc_bind):
+        # Test GPU ARQ does not need async bind
+        obj_extarq = self.class_objects["mlu"]
+        obj_extarq.arq.state = constants.ARQ_UNBOUND
+        dep_uuid = self.deployable_uuids[0]
+        fake_dep = fake_deployable.fake_deployable_obj(self.context,
+                                                       uuid=dep_uuid)
+        is_job = getattr(obj_extarq.bind, "is_job", False)
+        with mock.patch.object(obj_extarq, 'bind') as mock_bind:
+            mock_bind.is_job = is_job
+            obj_extarq._bind_job(self.context, fake_dep)
+            mock_bind.assert_called_once_with(self.context, fake_dep)
+            mock_aysnc_bind.assert_not_called()
 
     @mock.patch('cyborg.common.utils.ThreadWorks.get_workers_result')
     @mock.patch('cyborg.common.utils.ThreadWorks.spawn_master')
@@ -201,6 +216,7 @@ class TestExtARQJobMixin(base.DbTestCase):
         arq_binds = {
             self.class_objects["gpu"]: None,
             self.class_objects["no_program"]: None,
+            self.class_objects["mlu"]: None,
         }
         arq_binds.update(arq_job_binds)
         objects.ext_arq.ExtARQJobMixin.master(self.context, arq_binds)
@@ -214,6 +230,7 @@ class TestExtARQJobMixin(base.DbTestCase):
         arq_binds = {
             self.class_objects["gpu"]: None,
             self.class_objects["no_program"]: None,
+            self.class_objects["mlu"]: None,
         }
         objects.ext_arq.ExtARQ.master(self.context, arq_binds)
         mock_result.assert_called_once_with(self.context, arq_binds.keys())
