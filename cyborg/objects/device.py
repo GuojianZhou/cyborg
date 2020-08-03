@@ -24,7 +24,7 @@ from cyborg.objects.control_path import ControlpathID
 
 LOG = logging.getLogger(__name__)
 
-DEVICE_TYPE = ["GPU", "FPGA"]
+DEVICE_TYPE = ["GPU", "FPGA", "MLU"]
 
 
 @base.CyborgObjectRegistry.register
