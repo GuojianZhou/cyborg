@@ -15,7 +15,7 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    new_device_type = sa.Enum('GPU', 'FPGA', 'AICHIP',
+    new_device_type = sa.Enum('GPU', 'FPGA', 'AICHIP', 'MLU',
                               name='device_type')
     op.alter_column('devices', 'type',
                     existing_type=new_device_type,

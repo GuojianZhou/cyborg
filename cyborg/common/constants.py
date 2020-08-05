@@ -19,6 +19,7 @@ AGENT_TOPIC = 'cyborg-agent'
 DEVICE_GPU = 'GPU'
 DEVICE_FPGA = 'FPGA'
 DEVICE_AICHIP = 'AICHIP'
+DEVICE_VMLU = 'MLU'
 
 
 ARQ_STATES = (ARQ_INITIAL, ARQ_BIND_STARTED, ARQ_BOUND, ARQ_UNBOUND,
@@ -26,7 +27,7 @@ ARQ_STATES = (ARQ_INITIAL, ARQ_BIND_STARTED, ARQ_BOUND, ARQ_UNBOUND,
     'Initial', 'BindStarted', 'Bound', 'Unbound', 'BindFailed', 'Deleting')
 
 # Device type
-DEVICE_TYPE = (DEVICE_GPU, DEVICE_FPGA, DEVICE_AICHIP)
+DEVICE_TYPE = (DEVICE_GPU, DEVICE_FPGA, DEVICE_AICHIP, DEVICE_VMLU)
 
 # Attach handle type
 #  'TEST_PCI': used by fake driver, ignored by Nova virt driver.
@@ -35,5 +36,6 @@ ATTACH_HANDLE_TYPES = (AH_TYPE_PCI, AH_TYPE_MDEV, AH_TYPE_TEST_PCI) = (
 
 # Resource Class
 RESOURCES = {
-    "FPGA": orc.FPGA
+    "FPGA": orc.FPGA,
+    "VMLU": orc.VMLU
 }

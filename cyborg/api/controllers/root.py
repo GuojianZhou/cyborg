@@ -40,7 +40,7 @@ class Root(base.APIBase):
             'purpose management framework for acceleration '
             'resources (i.e. various types of accelerators '
             'such as Crypto cards, GPU, FPGA, NVMe/NOF SSDs, '
-            'ODP, DPDK/SPDK and so on).')
+            'ODP, DPDK/SPDK, VMLU and so on).')
         return root
 
 
